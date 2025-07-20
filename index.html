@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>PixieColor</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <div id="container">
+        <img id="logo" src="branding/logo.png" alt="Logo PixieColor">
+        <img id="mascota" src="branding/mascota.png" alt="Mascota Pixie">
+        <div id="lienzo">
+            <!-- Aquí se insertará el SVG -->
+        </div>
+    </div>
+            <div id="colores">
+            <img class="color" src="colores/1 Rojo.png" data-color="#f28b82">
+            <img class="color" src="colores/2 Naranja.png" data-color="#fbbc04">
+            <img class="color" src="colores/3 Amarillo.png" data-color="#fff475">
+            <img class="color" src="colores/4 Verde.png" data-color="#ccff90">
+            <img class="color" src="colores/5 Azul.png" data-color="#a7ffeb">
+            <img class="color" src="colores/6 Lila.png" data-color="#d7aefb">
+            <img class="color" src="colores/7 Negro.png" data-color="#000000">
+        </div>
+        <div id="botones">
+            <img class="boton" src="botones/1 ENVIAR.png" alt="Enviar">
+            <img class="boton" src="botones/2 MÁS DIBUJOS.png" alt="Más Dibujos">
+            <img class="boton" src="botones/3 MENÚ.png" alt="Menú">
+
+        </div>
+    </div>
+
+    <script>
+    const colorButtons = document.querySelectorAll('.color');
+    colorButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            selectedColor = btn.getAttribute('data-color');
+            colorButtons.forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        });
+    });
+
+        // Cargar el SVG desde el archivo externo y hacerlo interactivo
+        fetch("dibujo.svg")
+            .then(res => {
+                if (!res.ok) throw new Error("No se pudo cargar el SVG");
+                return res.text();
+            })
+            .then(data => {
+                console.log("✅ SVG cargado correctamente");
+                document.getElementById("lienzo").innerHTML = data;
+
+                const elementosSVG = document.querySelectorAll('#lienzo svg path, #lienzo svg rect, #lienzo svg circle, #lienzo svg polygon');
+                console.log("🧩 Elementos detectados:", elementosSVG.length);
+
+                elementosSVG.forEach(el => {
+                    el.style.cursor = "pointer";
+                    el.addEventListener('click', () => {
+                        console.log("🎯 Clic detectado en:", el);
+                        el.style.fill = selectedColor; // Pintar en rojo
+                    });
+                });
+            })
+            .catch(err => console.error("❌ Error cargando SVG:", err));
+    </script>
+</body>
+
+</html>
