@@ -15,7 +15,6 @@
         <div id="lienzo">
             <!-- Aquí se insertará el SVG -->
         </div>
-    </div>
             <div id="colores">
             <img class="color" src="colores/1 Rojo.png" data-color="#f28b82">
             <img class="color" src="colores/2 Naranja.png" data-color="#fbbc04">
@@ -35,6 +34,7 @@
 
     <script>
     const colorButtons = document.querySelectorAll('.color');
+    let selectedColor = "#000000";
     colorButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             selectedColor = btn.getAttribute('data-color');
@@ -54,7 +54,6 @@
                 document.getElementById("lienzo").innerHTML = data;
 
                 const elementosSVG = document.querySelectorAll('#lienzo svg path, #lienzo svg rect, #lienzo svg circle, #lienzo svg polygon');
-                console.log("🧩 Elementos detectados:", elementosSVG.length);
 
                 elementosSVG.forEach(el => {
                     el.style.cursor = "pointer";
